@@ -1,7 +1,8 @@
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
+
+from data_pipeline.src.plots import analyze
 
 
 if __name__ == '__main__':
@@ -9,9 +10,7 @@ if __name__ == '__main__':
     df = pd.read_csv('../winequality-red.csv', sep=';')
 
     # analyze
-    plt.title('Quality histogram')
-    df['quality'].hist()
-    plt.savefig('../fig.png')
+    analyze(df)
 
     # train-test split
     X, y = df.iloc[:, :-1].values, df['quality'].values
