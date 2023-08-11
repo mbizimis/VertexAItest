@@ -2,3 +2,5 @@ pandas
 numpy
 scikit-learn
 matplotlib
+gcsfs
+protobuf==3.20.1

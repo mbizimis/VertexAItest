@@ -1,11 +1,18 @@
 import numpy as np
+import pandas as pd
 from sklearn import linear_model
 from sklearn.metrics import mean_squared_error
 
 
+gspath = 'gs://ai_repo/VertextAI_test'
+
+
 if __name__ == '__main__':
     # read data
-    X_train, X_test, y_train, y_test = [np.load(f) for f in ['X_train.npy', 'X_test.npy', 'y_train.npy', 'y_test.npy']]
+    X_train, X_test, y_train, y_test = [
+        pd.read_json(f'{gspath}/{f}') for f in
+        ['X_train.json', 'X_test.json', 'y_train.json', 'y_test.json']
+    ]
 
     # create model
     model = linear_model.Ridge(alpha=0.5)
