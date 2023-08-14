@@ -1,6 +1,5 @@
-pandas
-numpy
-scikit-learn
+pandas==1.5.1
+scikit-learn==1.3.0
+protobuf==3.20.1
 matplotlib
 gcsfs
-protobuf==3.20.1
