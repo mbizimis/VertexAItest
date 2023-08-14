@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-from data_pipeline.src.plots import analyze
+from src.plots import analyze
 
 
 gspath = 'gs://ai_repo/VertextAI_test'

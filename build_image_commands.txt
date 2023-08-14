@@ -1,0 +1,11 @@
+# activate env variables
+source env_variables.sh
+
+# create docker image
+docker build -f <Dockerfile_path> -t ${IMAGE_URI} ./
+
+# setup instructions from Artifact Registry
+gcloud auth configure-docker us-central1-docker.pkg.dev
+
+# push docker image
+docker push ${IMAGE_URI}

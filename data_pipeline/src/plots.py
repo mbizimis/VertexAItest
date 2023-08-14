@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from data_pipeline.src.gcp_utils import upload_file
+from src.gcp_utils import upload_file
 
 
 def analyze(df: pd.DataFrame, gspath: str, filename='fig.png'):
