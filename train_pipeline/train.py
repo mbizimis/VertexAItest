@@ -33,7 +33,7 @@ if __name__ == '__main__':
     joblib.dump(model, filename)
 
     # Upload model artifact to Cloud Storage
-    model_directory = os.environ['AIP_MODEL_DIR']
+    model_directory = os.environ['AIP_MODEL_DIR'] if 'AIP_MODEL_DIR' in os.environ else gspath
     storage_path = os.path.join(model_directory, filename)
     blob = storage.blob.Blob.from_string(storage_path, client=storage.Client())
     blob.upload_from_filename(filename)
