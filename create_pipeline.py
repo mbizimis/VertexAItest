@@ -6,19 +6,29 @@ from kfp.components.pipeline_task import PipelineTask
 
 
 @dsl.container_component
-def data_component():
+def data_component(dataset_path: dsl.OutputPath()):
     return dsl.ContainerSpec(
         image='us-central1-docker.pkg.dev/information-discovery/vertex-ai-test/data-pipeline:latest',
-        args=[]
+        args=[],
     )
 
 
 @dsl.container_component
-def train_component():
+def train_component(dataset_path: dsl.InputPath()):
     return dsl.ContainerSpec(
         image='us-central1-docker.pkg.dev/information-discovery/vertex-ai-test/train-pipeline:latest',
-        args=[]
+        args=['--dataset_path', dataset_path]
     )
+
+
+# @dsl.component(base_image='us-central1-docker.pkg.dev/information-discovery/vertex-ai-test/data-pipeline:latest')
+# def data_component_wrapper():
+#     pass
+#
+#
+# @dsl.component(base_image='us-central1-docker.pkg.dev/information-discovery/vertex-ai-test/train-pipeline:latest')
+# def train_component_wrapper():
+#     pass
 
 
 @dsl.pipeline(
@@ -35,10 +45,6 @@ def my_pipeline(project_id: str):
     )
     print(data_job)
 
-    print('Running data job...')
-    res = data_job()
-    print('Done:', res)
-
     # run training afterwards
     train_job = create_custom_training_job_from_component(
         train_component,
@@ -51,9 +57,15 @@ def my_pipeline(project_id: str):
         boot_disk_size_gb=100,
     )
 
+    # must run jobs after declaring them else error
+
+    print('Running data job...')
+    res: PipelineTask = data_job()
+    print('Done:', res)
+
     print("Running train job...")
-    res = train_job()
-    print("Done:", res)
+    res2: PipelineTask = train_job(res.outputs['dataset_path'])
+    print("Done:", res2)
 
 
 # @dsl.pipeline(
