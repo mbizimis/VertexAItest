@@ -1,4 +1,5 @@
 pandas==1.5.1
 scikit-learn==1.3.0
 protobuf==3.20.1
+joblib
 gcsfs
